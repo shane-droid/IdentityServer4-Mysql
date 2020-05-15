@@ -4,8 +4,10 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace IdentityServerMysql
 {
@@ -22,6 +24,14 @@ namespace IdentityServerMysql
         {
             // uncomment, if you want to add an MVC-based UI
             //services.AddControllersWithViews();
+
+            //Define connection string
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("AppSettings.json", false)
+                .Build();
+
+            string connectionString = config.GetSection("DefaultConnection").Value;
 
             var builder = services.AddIdentityServer()
                 .AddInMemoryIdentityResources(Config.Ids)
