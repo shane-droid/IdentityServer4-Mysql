@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
+using System.Reflection;
 
 namespace IdentityServerMysql
 {
@@ -37,7 +38,7 @@ namespace IdentityServerMysql
 
 
             // Configure the user stores for entity framework
-          
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             var builder = services
                 .AddIdentityServer(options =>
