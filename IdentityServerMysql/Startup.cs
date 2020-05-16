@@ -33,13 +33,7 @@ namespace IdentityServerMysql
 
             string connectionString = config.GetSection("DefaultConnection").Value;
 
-            var builder = services.AddIdentityServer()
-                .AddInMemoryIdentityResources(Config.Ids)
-                .AddInMemoryApiResources(Config.Apis)
-                .AddInMemoryClients(Config.Clients);
-
-            // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+            
         }
 
         public void Configure(IApplicationBuilder app)
