@@ -37,6 +37,8 @@ namespace IdentityServerMysql
 
 
             // Configure the user stores for entity framework
+          
+
             var builder = services
                 .AddIdentityServer(options =>
                 {
