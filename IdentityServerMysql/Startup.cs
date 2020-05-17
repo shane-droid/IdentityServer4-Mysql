@@ -79,8 +79,11 @@ namespace IdentityServerMysql
                 app.UseDeveloperExceptionPage();
             }
 
+            //***********
             // call api bellow to initial database with seed data
-            InitializeDatabase(app);
+            //InitializeDatabase(app);
+            //***********
+
 
             // uncomment if you want to add MVC
             //app.UseStaticFiles();
