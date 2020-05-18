@@ -70,6 +70,14 @@ namespace IdentityServerMysql
                     options.EnableTokenCleanup = true;
                 });
 
+            //Configure ASPNetID
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseMySql(connectionString, mysql => mysql.MigrationsAssembly(migrationsAssembly)));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
