@@ -89,7 +89,7 @@ namespace IdentityServerMysql
             });
 
 
-            
+            //configure Identityserver4 and stores
             var builder = services
                 .AddIdentityServer(options =>
                 {
