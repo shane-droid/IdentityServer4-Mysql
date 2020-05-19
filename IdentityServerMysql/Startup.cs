@@ -99,7 +99,7 @@ namespace IdentityServerMysql
                     options.Events.RaiseSuccessEvents = true;
                 })
                 // adds aspnetid to identityserver so that user claims are passed
-                .AddAspNetIdentity<IdentityUser>()
+                .AddAspNetIdentity<ApplicationUser>()
 
                 // test user data - REMOVE AFTER TESTING
                 .AddTestUsers(TestUsers.Users)
