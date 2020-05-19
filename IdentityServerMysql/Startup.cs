@@ -98,6 +98,9 @@ namespace IdentityServerMysql
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
                 })
+                // adds aspnetid to identityserver so that user claims are passed
+                .AddAspNetIdentity<IdentityUser>()
+                
                 .AddTestUsers(TestUsers.Users)
                 // this adds the config data from DB (clients, resources, CORS)
                 .AddConfigurationStore(options =>
