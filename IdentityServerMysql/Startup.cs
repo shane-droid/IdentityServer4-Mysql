@@ -102,7 +102,7 @@ namespace IdentityServerMysql
                 .AddAspNetIdentity<IdentityUser>()
 
                 // test user data - REMOVE AFTER TESTING
-                .AddTestUsers(TestUsers.Users
+                .AddTestUsers(TestUsers.Users)
 
                 // this adds the config data from DB (clients, resources, CORS)
                 .AddConfigurationStore(options =>
