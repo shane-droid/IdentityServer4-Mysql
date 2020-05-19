@@ -48,6 +48,48 @@ namespace IdentityServerMysql
             // Configure the user stores for entity framework
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
+            //Configure ASPNetID
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseMySql(connectionString, mysql => mysql.MigrationsAssembly(migrationsAssembly)));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>
+                (options =>
+                {
+                    // Password settings.
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredUniqueChars = 1;
+
+                    // Lockout settings.
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.AllowedForNewUsers = true;
+
+                    // User settings.
+                    options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    options.User.RequireUniqueEmail = false;
+                }
+                )
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+
+            
             var builder = services
                 .AddIdentityServer(options =>
                 {
@@ -71,45 +113,7 @@ namespace IdentityServerMysql
                     options.EnableTokenCleanup = true;
                 });
 
-            //Configure ASPNetID
-            services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseMySql(connectionString, mysql => mysql.MigrationsAssembly(migrationsAssembly)));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>
-                (options =>
-                    {
-                        // Password settings.
-                        options.Password.RequireDigit = true;
-                        options.Password.RequireLowercase = true;
-                        options.Password.RequireNonAlphanumeric = true;
-                        options.Password.RequireUppercase = true;
-                        options.Password.RequiredLength = 6;
-                        options.Password.RequiredUniqueChars = 1;
-
-                        // Lockout settings.
-                        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                        options.Lockout.MaxFailedAccessAttempts = 5;
-                        options.Lockout.AllowedForNewUsers = true;
-
-                        // User settings.
-                        options.User.AllowedUserNameCharacters =
-                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                        options.User.RequireUniqueEmail = false;
-                    }
-                )
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                options.SlidingExpiration = true;
-            });
+           
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
