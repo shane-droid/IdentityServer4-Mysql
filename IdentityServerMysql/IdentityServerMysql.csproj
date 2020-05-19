@@ -19,12 +19,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
 
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="AspNetIdentity\Controllers\" />
   </ItemGroup>
 </Project>
