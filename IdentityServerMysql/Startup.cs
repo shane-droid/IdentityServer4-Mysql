@@ -52,7 +52,7 @@ namespace IdentityServerMysql
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseMySql(connectionString, mysql => mysql.MigrationsAssembly(migrationsAssembly)));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>
+            services.AddIdentity<ApplicationUser, IdentityRole> //adds  AspNetID functionality to project
                 (options =>
                 {
                     // Password settings.
@@ -74,8 +74,9 @@ namespace IdentityServerMysql
                     options.User.RequireUniqueEmail = false;
                 }
                 )
+                //configures aspNetId to store user info
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders(); // required, allows for password resets etc
 
             services.ConfigureApplicationCookie(options =>
             {
